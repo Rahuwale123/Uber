@@ -1,0 +1,204 @@
+import 'package:flutter/material.dart';
+import 'package:cuberto_bottom_bar/cuberto_bottom_bar.dart';
+
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(
+          border: Border(
+            top: BorderSide(
+              color: Color.fromARGB(255, 51, 50, 50),
+            ),
+          ),
+        ),
+        height: 60,
+        width: double.infinity,
+        child: CubertoBottomBar(
+          inactiveIconColor: Colors.grey,
+          tabColor: Colors.blue,
+          initialSelection: _currentIndex,
+          tabs: [
+            TabData(iconData: Icons.home, title: 'Home'),
+            TabData(iconData: Icons.merge_outlined, title: 'Services'),
+            TabData(iconData: Icons.bookmark_border, title: 'Activity'),
+            TabData(iconData: Icons.person, title: 'Account'),
+          ],
+          onTabChangedListener: (position, title, tabColor) {
+            setState(() {
+              _currentIndex = position;
+            });
+          },
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  "uber",
+                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.w900),
+                ),
+              ),
+              Container(
+                height: 50,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 227, 225, 225),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: const Row(
+                  children: [
+                    SizedBox(width: 10),
+                    Icon(Icons.search_rounded),
+                    SizedBox(width: 10),
+                    Text(
+                      "Where to?",
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Suggestions?",
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                    ),
+                    TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        "see all",
+                        style: TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildSuggestionCard(Icons.abc, "trip"),
+                  _buildSuggestionCard(Icons.abc, "trip"),
+                  _buildSuggestionCard(Icons.abc, "trip"),
+                  _buildSuggestionCard(Icons.abc, "trip"),
+                ],
+              ),
+              const SizedBox(height: 15),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Commute smarter",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    _buildCommuteCard('assets/images/img1.jpg', "Hop on a shuttle", "Pre-book a seat, ride in comfort"),
+                    const SizedBox(width: 25),
+                    _buildCommuteCard('assets/images/img2.jpg', "Try group trips", "Take a trip with coworker' and save"),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "Save every day",
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    _buildCommuteCard('assets/images/img1.jpg', "Hop on a shuttle", "Pre-book a seat, ride in comfort"),
+                    const SizedBox(width: 25),
+                    _buildCommuteCard('assets/images/img2.jpg', "Try group trips", "Take a trip with coworker' and save"),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSuggestionCard(IconData icon, String title) {
+    return Container(
+      height: 90,
+      width: 80,
+      decoration: BoxDecoration(
+        color: const Color.fromARGB(255, 222, 220, 220),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, size: 40),
+          const SizedBox(height: 5),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 18),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCommuteCard(String imagePath, String title, String subtitle) {
+    return Container(
+      width: 260,
+      height: 200,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(15),
+            child: Image(
+              image: AssetImage(imagePath),
+              fit: BoxFit.cover,
+            ),
+          ),
+          const SizedBox(height: 3),
+          Text(
+            title,
+            style: const TextStyle(fontSize: 23, fontWeight: FontWeight.w800),
+          ),
+          const SizedBox(height: 7),
+          Text(
+            subtitle,
+            style: const TextStyle(fontSize: 15, color: Colors.black54),
+          ),
+        ],
+      ),
+    );
+  }
+}
